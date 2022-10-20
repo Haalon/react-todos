@@ -19,6 +19,7 @@ export const TodoList = ({ todos: initialTodods }: TodoListProps) => {
   }, [])
 
   const addTodo = useCallback(() => {
+    if (!newTodoText) return;
     setTodos([{text: newTodoText, done: false}, ...todos])
   }, [newTodoText, todos])
 
