@@ -42,10 +42,11 @@ export const TodoList = ({ todos: initialTodods }: TodoListProps) => {
         {todos.map((item, i) => (
           <div className={classes.todoItem} key={i} data-done={item.done}>
             <button onClick={e => switchTodoDone(i)}>{item.done ? '☑' : '☐'}</button>
-            <button onClick={e => deleteTodo(i)}>🗙</button>
+            
             <div>
               <span data-testid={`todo${i}`}>{item.text}</span>  
             </div>
+            <button className={classes.deleteBtn} onClick={e => deleteTodo(i)}>🗙</button>
           </div>  
         ))}
       </div>
