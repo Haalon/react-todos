@@ -14,22 +14,22 @@ export const TodoList = ({ todos: initialTodods }: TodoListProps) => {
   const [todos, setTodos] = useState(initialTodods);
   const [newTodoText, setNewTodoText] = useState("");
 
-  const handleChange = useCallback((e:React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     setNewTodoText(e.target.value)
-  }, [])
+  }
 
-  const addTodo = useCallback(() => {
+  const addTodo = () => {
     if (!newTodoText) return;
     setTodos([{text: newTodoText, done: false}, ...todos])
-  }, [newTodoText, todos])
+  }
 
-  const deleteTodo = useCallback((index: number) => {
+  const deleteTodo = (index: number) => {
     setTodos(todos.filter((_, i) => i !== index))
-  }, [todos])
+  }
 
-  const switchTodoDone = useCallback((index: number) => {
+  const switchTodoDone = (index: number) => {
     setTodos(todos.map((item, i) => i === index ? {...item, done: !item.done} : item))
-  }, [todos])
+  }
 
 
   return (
