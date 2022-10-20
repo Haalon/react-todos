@@ -19,10 +19,18 @@ export const TodoList = ({ todos: initialTodods }: TodoListProps) => {
     setNewTodoText(e.target.value)
   }
 
-  const addTodo = () => {
+  const submitText = (e:React.SyntheticEvent) => {
+    e.preventDefault();
     if (!newTodoText) return;
-    setTodos([{text: newTodoText, done: false}, ...todos])
-    setNewTodoText("")
+    if (editIndex < 0) {
+      setTodos([{text: newTodoText, done: false}, ...todos])
+      setNewTodoText("")
+      return;
+    }
+
+    setTodos(todos.map((item, i) => i === editIndex ? {...item, text: newTodoText} : item));
+    setEditIndex(-1);
+    setNewTodoText("");
   }
 
   const deleteTodo = (index: number) => {
@@ -44,23 +52,13 @@ export const TodoList = ({ todos: initialTodods }: TodoListProps) => {
     setNewTodoText(todos[index].text);
   }
 
-  const editTodo = () => {
-    if (!newTodoText) return;
-    setTodos(todos.map((item, i) => i === editIndex ? {...item, text: newTodoText} : item));
-    setEditIndex(-1);
-    setNewTodoText("");
-  }
-
 
   return (
     <>
-      <div className={classes.addTodo}>
+      <form className={classes.addTodo} onSubmit={submitText}>
         <input onChange={handleChange} value={newTodoText}></input>
-        {editIndex >= 0 ? 
-          <button onClick={editTodo}>Edit</button> :
-          <button onClick={addTodo}>Add</button> 
-        }
-      </div>
+        <button onClick={submitText}>{editIndex >= 0 ? "Edit" : "Add" }</button> 
+      </form>
       <div className={classes.todoList}>
         {todos.map((item, i) => (
           <div className={classes.todoItem} key={i} data-done={item.done} data-edit={i === editIndex}>
