@@ -23,8 +23,8 @@ export const TodoList = ({ todos: initialTodods }: TodoListProps) => {
     e.preventDefault();
     if (!newTodoText) return;
     if (editIndex < 0) {
-      setTodos([{text: newTodoText, done: false}, ...todos])
-      setNewTodoText("")
+      setTodos([{text: newTodoText, done: false}, ...todos]);
+      setNewTodoText("");
       return;
     }
 
@@ -34,11 +34,13 @@ export const TodoList = ({ todos: initialTodods }: TodoListProps) => {
   }
 
   const deleteTodo = (index: number) => {
-    setTodos(todos.filter((_, i) => i !== index))
+    setTodos(todos.filter((_, i) => i !== index));
+    setEditIndex(-1);
   }
 
   const switchTodoDone = (index: number) => {
-    setTodos(todos.map((item, i) => i === index ? {...item, done: !item.done} : item))
+    setTodos(todos.map((item, i) => i === index ? {...item, done: !item.done} : item));
+    setEditIndex(-1);
   }
 
   const switchTodoEdit = (index: number) => {
