@@ -18,9 +18,17 @@ export const TodoList = ({ todos: initialTodods }: TodoListProps) => {
     setNewTodoText(e.target.value)
   }, [])
 
-  const addTodo = useCallback((e:React.MouseEvent<HTMLButtonElement>) => {
+  const addTodo = useCallback(() => {
     setTodos([{text: newTodoText, done: false}, ...todos])
-  }, [newTodoText])
+  }, [newTodoText, todos])
+
+  const deleteTodo = useCallback((index: number) => {
+    setTodos(todos.filter((_, i) => i !== index))
+  }, [todos])
+
+  const switchTodoDone = useCallback((index: number) => {
+    setTodos(todos.map((item, i) => i === index ? {...item, done: !item.done} : item))
+  }, [todos])
 
 
   return (
@@ -29,13 +37,17 @@ export const TodoList = ({ todos: initialTodods }: TodoListProps) => {
         <input onChange={handleChange}></input>
         <button onClick={addTodo}>Add</button>
       </div>
-      <ul className={classes.todoList}>
+      <div className={classes.todoList}>
         {todos.map((item, i) => (
-          <li key={i}>
-            <span data-testid={`todo${i}`}>{item.text}</span>
-          </li>
+          <div className={classes.todoItem} key={i} data-done={item.done}>
+            <button onClick={e => switchTodoDone(i)}>{item.done ? '☑' : '☐'}</button>
+            <button onClick={e => deleteTodo(i)}>🗙</button>
+            <div>
+              <span data-testid={`todo${i}`}>{item.text}</span>  
+            </div>
+          </div>  
         ))}
-      </ul>
+      </div>
     </>
 
   );
