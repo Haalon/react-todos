@@ -31,10 +31,15 @@ ul.todoList {
     list-style: none;
     flex-grow: 1;
     border: 1px solid transparent;
+    cursor: pointer;
 }
 
 .todoItem[data-done="true"] div {
     border: 1px solid #00a8f0;
+}
+
+.todoItem[data-edit="true"] div {
+    border: 1px solid #00f048;
 }
 
 .deleteBtn {
